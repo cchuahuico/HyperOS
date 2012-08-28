@@ -1,4 +1,4 @@
-OBJS=boot.o main.o
+OBJS=boot.o main.o common.o screen.o
 CC=i686-elf-gcc
 LD=i686-elf-ld
 CFLAGS=-nostdlib -nostdinc -fno-builtin -fno-stack-protector -Wall -Wextra
