@@ -6,5 +6,6 @@ typedef unsigned char u8int;
 typedef unsigned short u16int;
 
 void io_out_byte(u16int port, u8int data);
+void *memset(void *dst, int value, u32int sz);
 
 #endif
