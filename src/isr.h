@@ -20,12 +20,13 @@ typedef struct
 
 typedef struct
 {
+    u32int eax, ecx, edx, ebx, esp, ebp, esi, edi;
     u32int interrupt_number;
     u32int error_code;
     u32int eip;
     u32int cs;
     u32int eflags;
-    u32int esp;
+    u32int oresp;
     u32int ss;
 } handler_context_t;
 
