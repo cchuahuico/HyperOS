@@ -14,8 +14,8 @@ typedef struct
 
 typedef struct
 {
-    u32int base;
     u16int limit;
+    u32int base;
 }__attribute__((packed)) idt_ptr_t; 
 
 typedef struct
