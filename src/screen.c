@@ -56,3 +56,26 @@ void screen_clear(void)
     for (i = 0; i < FRAMESIZE; ++i)
         frame_buffer[i] = 0;
 }
+
+void screen_puti(u32int num)
+{
+    char stack[10];
+    char *sptr = stack;
+
+    if (num == 0)
+    {
+        screen_putc(48);
+        return;
+    }
+
+    while (num != 0)
+    {
+        *sptr++ = num % 10 + 48;
+        num = num / 10;
+    }
+
+    while ((sptr - stack) > 0)
+    {
+        screen_putc(*(--sptr));
+    }
+}
