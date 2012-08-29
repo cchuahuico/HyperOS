@@ -18,6 +18,18 @@ typedef struct
     u16int limit;
 }__attribute__((packed)) idt_ptr_t; 
 
+typedef struct
+{
+    u32int interrupt_number;
+    u32int error_code;
+    u32int eip;
+    u32int cs;
+    u32int eflags;
+    u32int esp;
+    u32int ss;
+} handler_context_t;
+
 void init_idt(void);
+void isr_handler(handler_context_t ctx);
 
 #endif
