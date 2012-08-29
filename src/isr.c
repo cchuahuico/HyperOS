@@ -97,4 +97,6 @@ void init_idt(void)
 void isr_handler(handler_context_t ctx)
 {
     screen_puts("interrupt received: ");
+    screen_puti(ctx.interrupt_number);
+    screen_putc('\n');
 }
