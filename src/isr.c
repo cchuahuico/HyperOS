@@ -1,4 +1,5 @@
 #include "isr.h"
+#include "screen.h"
 
 #define MAXINTERRUPTGATES 256
 #define CSSELECTOR 0x08
@@ -40,18 +41,19 @@ extern void isr31(void);
 interrupt_gate_t idt[MAXINTERRUPTGATES];
 idt_ptr_t idt_ptr;
 
-static void set_interrupt_gate(u8int int_no, u32int handler, u16int selector, u8int flags)
+static void set_interrupt_gate(u8int int_no, void (*handler)(void), u16int selector, u8int flags)
 {
-    idt[int_no].handler_low = handler & 0xFFFF;
+    u32int addr = (u32int) handler;
+    idt[int_no].handler_low = addr & 0xFFFF;
     idt[int_no].selector = selector;
     idt[int_no].reserved = 0;
     idt[int_no].flags = flags;
-    idt[int_no].handler_high = handler >> 16;
+    idt[int_no].handler_high = addr >> 16;
 }
 
 void init_idt(void)
 {
-    idt_ptr.base = &idt;
+    idt_ptr.base = (u32int) &idt;
     idt_ptr.limit = sizeof(interrupt_gate_t) * MAXINTERRUPTGATES - 1;
 
     memset(idt, 0, MAXINTERRUPTGATES);
@@ -90,4 +92,9 @@ void init_idt(void)
     set_interrupt_gate(31, isr31, CSSELECTOR, 0x8E);
 
     reload_idt(&idt_ptr);
+}
+
+void isr_handler(handler_context_t ctx)
+{
+    screen_puts("interrupt received: ");
 }
