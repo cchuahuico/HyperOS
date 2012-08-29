@@ -10,6 +10,8 @@
 
 #define CALCOFFSET(x, y) ((y) * FRAMEWIDTH + (x))
 
+#define ZEROASCII 48
+
 static u16int *frame_buffer = FRAMEADDR;
 static u8int cur_x;
 static u8int cur_y;
@@ -29,10 +31,10 @@ void screen_putc(u8int character)
     data &= 0x0FFF; /* black background */
     data |= 0x0F00; /* white foreground */
 
-    frame_buffer[CALCOFFSET(cur_x, cur_y)] = data;
+    if (character != '\n')
+        frame_buffer[CALCOFFSET(cur_x, cur_y)] = data;
 
-    /* go to next line if whole line is taken */
-    if (++cur_x == FRAMEWIDTH)
+    if (++cur_x == FRAMEWIDTH || character == '\n')
     {
         cur_x = 0;
         ++cur_y;
@@ -64,13 +66,13 @@ void screen_puti(u32int num)
 
     if (num == 0)
     {
-        screen_putc(48);
+        screen_putc(ZEROASCII);
         return;
     }
 
     while (num != 0)
     {
-        *sptr++ = num % 10 + 48;
+        *sptr++ = num % 10 + ZEROASCII;
         num = num / 10;
     }
 
