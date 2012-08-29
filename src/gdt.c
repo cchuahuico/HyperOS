@@ -5,8 +5,8 @@
 
 extern void reload_gdt(gdt_ptr_t *);
 
-segment_descriptor_t gdt[MAXGDT];
-gdt_ptr_t gdt_ptr;
+static segment_descriptor_t gdt[MAXGDT];
+static gdt_ptr_t gdt_ptr;
 
 static void set_descriptor(u8int idx, u32int base, 
         u32int limit, u8int access, u8int granularity)

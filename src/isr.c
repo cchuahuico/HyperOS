@@ -38,8 +38,8 @@ extern void isr29(void);
 extern void isr30(void);
 extern void isr31(void);
 
-interrupt_gate_t idt[MAXINTERRUPTGATES];
-idt_ptr_t idt_ptr;
+static interrupt_gate_t idt[MAXINTERRUPTGATES];
+static idt_ptr_t idt_ptr;
 
 static void set_interrupt_gate(u8int int_no, void (*handler)(void), u16int selector, u8int flags)
 {
