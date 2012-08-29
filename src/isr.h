@@ -18,7 +18,6 @@ typedef struct
     u16int limit;
 }__attribute__((packed)) idt_ptr_t; 
 
-
 void init_idt(void);
 
 #endif
